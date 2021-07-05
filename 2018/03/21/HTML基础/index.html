@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="shaw">
+    
+    <title>
+        
+            HTML基础 |
+        
+        Zen Time
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.zenwill.top","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.jpg"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Zen Time" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Zen Time
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">HTML基础</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">shaw</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2018-03-21 13:02:44
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/html/">html</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="HTML基础"><a href="#HTML基础" class="headerlink" title="HTML基础"></a>HTML基础</h1><h2 id="语言简介"><a href="#语言简介" class="headerlink" title="语言简介"></a>语言简介</h2><p><strong>HTML</strong>（Hypertext Markup Language, <em>超文本标记语言</em>)，说白了就是网页的源码，包含、描述了网页中将要展示的文本、图片等信息，同时浏览器可以理解为这种格式的代码的编译器。因此HTML是学习网页设计要掌握的最基础知识（后续要掌握的知识有CSS、JavaScript）。本文旨在记录一些基础的语法，或者说元素。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>如果你打开一个网页，然后点选浏览器选项中的查看源码，那就会看到一坨带有<code>&lt;xxx&gt;</code>这种类似符号的代码，这种记号称之为<strong>tags</strong>，用来组织网页信息。<code>&lt;xxx yy=&quot;zz&quot;&gt;</code> yy是xxx tag的一个属性（attributes），用来增加一些额外的信息，比如tags所包含文字的字体；“zz”是属性值，例如zz是字体名称。只有“true”和“false”两个值的属性（称为Boolean attributes）在只写属性名的时候默认值为true，不写该属性，其值默认为false。</p>
+<h3 id="基本tags"><a href="#基本tags" class="headerlink" title="基本tags"></a>基本tags</h3><p><code>&lt;html&gt;&lt;/html&gt;</code> 表示html的开始和结束，也就是所有代码都要放在这两个tags中间。<code>&lt;html lang=&quot;en-GB&quot;&gt;</code>lang属性表示网页的语言。</p>
+<p><code>&lt;head&gt;&lt;/head&gt;</code> 包含head section，其中的内容不在页面直接显示</p>
+<p><code>&lt;title&gt;&lt;/title&gt;</code> 在head section中，包含浏览器打开网页时的标签页名</p>
+<p><code>&lt;body&gt;&lt;/body&gt;</code> 包含body section，其中的内容在网页中直接显示</p>
+<p><code>&lt;!DOCTYPE html&gt;</code> 一般写在文档的最前面，用来告诉浏览器所用的代码版本是HTML5</p>
+<p><code>&lt;h1&gt;&lt;/h1&gt;</code>、<code>&lt;h2&gt;&lt;/h2&gt;</code> 包含标题，按数字分层</p>
+<p><code>&lt;p&gt;&lt;/p&gt;</code> 包含一个段落</p>
+<p><code>&lt;br&gt;</code> 换行符。这个tag不像上面几个那样是成对的，因为它不需要包含内容，这样的tag叫empty tag</p>
+<p><code>&lt;em&gt;&lt;/em&gt;</code> 被其包含的文字会显示斜体</p>
+<p><code>&lt;strong&gt;&lt;/strong&gt;</code> 被其包含的文字会显示粗体</p>
+<p><code>&lt;hr&gt;</code> 分割线</p>
+<p><code>&lt;!--F**K THE WIRLD--&gt;</code> 这个是注释</p>
+<h3 id="超链接（hyperlinks）与多媒体"><a href="#超链接（hyperlinks）与多媒体" class="headerlink" title="超链接（hyperlinks）与多媒体"></a>超链接（hyperlinks）与多媒体</h3><p><code>&lt;a&gt;&lt;/a&gt;</code> 其中的文字或图片等会变成超链接。<code>&lt;a href=&quot;https://*****&quot; target=&quot;_blank&quot;&gt;</code> href属性为超链接所指路径或网址;target属性为打开新网页的方式，属性值“_blank”打开新标签页</p>
+<p><code>&lt;img src=&quot;&quot; width=&quot;200&quot; hight=&quot;135&quot; alt=&quot;oops!&quot;&gt;</code> 图片。src属性为图片的地址;alt为图片路径失效时显示的图片。通过tags的嵌套<code>&lt;a&gt;&lt;img&gt;&lt;/a&gt;</code>可以实现将图片变成超链接</p>
+<p><code>&lt;iframe&gt;&lt;/iframe&gt;</code> inline frame,网页中的一个子网页或者说框架，利用YouTube可以实现视频的插入 <code>&lt;iframe width=&quot;200&quot; hight=&quot;135&quot; src=&quot;https://www.youtube.com/embed/****&quot;&gt;&lt;/iframe&gt;</code></p>
+<p><code>&lt;video src=&quot;&quot; controls=&quot;true&quot;&gt;</code> 插入视频的另一种方式。这里src是视频文件的地址；control为“true”时显示视频的播放和暂停按钮</p>
+<p><code>&lt;audio&gt;</code> 插入音频。用法与video类似</p>
+<h3 id="列表（list）与表格（table）"><a href="#列表（list）与表格（table）" class="headerlink" title="列表（list）与表格（table）"></a>列表（list）与表格（table）</h3><p><code>&lt;ol&gt;&lt;/ol&gt;</code> 有序号的列表。type属性表示编号的类型，如默认为1.2.3.,值“A”表示按A.B.C.排列，其他属性值还有“a”，希腊字母“I”等；属性reversed表示是否编号按降序排列，是一个Boolean attributes</p>
+<p><code>&lt;ul&gt;&lt;/ul&gt;</code> 没有序号的列表</p>
+<p><code>&lt;li&gt;&lt;/li&gt;</code> 列表中的一项。嵌在ol或ul中</p>
+<p><code>&lt;table&gt;&lt;/table&gt;</code> 有行和列的表格。border属性值有“1”和“0”，表示是否加边框</p>
+<p><code>&lt;tr&gt;&lt;/tr&gt;</code> 表格中的一行。嵌在table tags中</p>
+<p><code>&lt;td&gt;&lt;/td&gt;</code> 一行中的一格。嵌在tr tags中</p>
+<p><code>&lt;th&gt;&lt;/th&gt;</code> 表头所占的一格。通常嵌在第一组tr中。属性colspan表示在这个标题下拆分多少列</p>
+<p>###风格（style）<br>基本所有的tags（或者称为HTML element）都有一个style属性，用来设定大小、颜色等等，以达到美好效果，如<code>&lt;body style=&quot;background_color:gray&quot;&gt;</code>可以设定网页背景色。style的值称为style declaration，是用CSS格式写的。CSS是一种用来设计网页显示效果的语言，格式是<code>property:value;</code>，这里value是多个单词时，用单引号括起来。property除了背景颜色，还有文字颜色<code>color</code>、字体<code>font-family</code>、字体大小<code>font-size</code>(值为像素px或百分比%)、文字位置<code>text-align</code>（如值center使文字居中）<br>可以用<code>&lt;div&gt;&lt;/div&gt;</code>将代码块括起来，相当于在网页中圈了一块区域（section），然后用style属性对这块区域进行设计。而<code>&lt;span&gt;&lt;/span&gt;</code>可以用来截取文字中的一部分进行style</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：HTML基础</li>
+        <li>Post author：shaw</li>
+        <li>Create time：2018-03-21 13:02:44</li>
+        <li>
+            Post link：https://www.zenwill.top/2018/03/21/HTML基础/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2018/05/24/%E6%B5%85%E8%B0%88Python%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">浅谈Python闭包与装饰器</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2018/03/16/%E7%8C%9C%E6%95%B0%E6%B8%B8%E6%88%8F/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">猜数游戏</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'c54d7d7ce569262e9b73',
+                    clientSecret: '36de61ce17c912f2bb1eebe44b42ca8d48f7d913',
+                    repo: 'ParadoxZW.github.io',
+                    owner: 'ParadoxZW',
+                    admin: ['ParadoxZW'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">shaw</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">HTML基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E8%A8%80%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">语言简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%ACtags"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本tags</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E9%93%BE%E6%8E%A5%EF%BC%88hyperlinks%EF%BC%89%E4%B8%8E%E5%A4%9A%E5%AA%92%E4%BD%93"><span class="nav-number">1.2.2.</span> <span class="nav-text">超链接（hyperlinks）与多媒体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%EF%BC%88list%EF%BC%89%E4%B8%8E%E8%A1%A8%E6%A0%BC%EF%BC%88table%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">列表（list）与表格（table）</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

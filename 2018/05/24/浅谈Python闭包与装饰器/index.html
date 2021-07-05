@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="shaw">
+    
+    <title>
+        
+            浅谈Python闭包与装饰器 |
+        
+        Zen Time
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.zenwill.top","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.jpg"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Zen Time" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Zen Time
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">浅谈Python闭包与装饰器</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">shaw</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2018-05-24 20:43:04
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/python/">python</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/algorithm/">algorithm</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="加载、解释与执行"><a href="#加载、解释与执行" class="headerlink" title="加载、解释与执行"></a>加载、解释与执行</h2><p>python是解释型语言、脚本语言，一大特点是一行语句只有需要被执行时才会被编译一次，编译后立即执行。所谓的“需要被执行”指python解释器“阅读”代码的顺序，通常来说是从上往下一行一行“阅读”，也就是编译并执行完了当前行，才会执行下一行；当然也有例外的时候，比如设置了for循环（需要注意的是，假设for循环中有4行代码，循环3次，那么解释器实际上编译了12行），还有就是调用方法（函数），解释器会跳转到方法代码块开始编译执行。观察如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span>(<span class="params">a</span>):</span></span><br><span class="line">    a = a ** <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;调用fun方法&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(fun(a))</span><br></pre></td></tr></table></figure>
+<p>这段代码的编译执行顺序是1、4、2、3、5。（提示：函数定义真正被执行的只有def行，函数体中的代码只是以字符串的形式简单地<strong>加载</strong>进了内存，并没有被编译，函数每一次调用的时候才进行一轮编译执行；第五行中出现了函数调用，会先跳转到函数块，执行完函数中的语句拿到返回值后跳转回来执行<code>print</code>）</p>
+<h2 id="一切皆对象"><a href="#一切皆对象" class="headerlink" title="一切皆对象"></a>一切皆对象</h2><p>python中一切皆对象的思想比Java更为彻底。<code>int</code>型等所有变量是对象，函数是对象（类也是对象，这个暂时不做展开）。是对象就会有对象的属性和方法，这里介绍一种很有用的方法，<code>id(对象名)</code>，这个方法会返回对象名所指向对象的地址，利用它可以很好的研究代码，观察各个变量的内存位置。因为一切皆对象，所以python中的一切变量都是引用变量，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">a = <span class="number">2</span></span><br><span class="line">b = <span class="number">2</span></span><br><span class="line">a = fun</span><br><span class="line"><span class="built_in">print</span>(a(<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(a) == <span class="built_in">id</span>(b))</span><br></pre></td></tr></table></figure>
+<p>第一行到第二行，并不是给a变量赋了新的值，而是把a的指向从存放对象int 1的内存地址改到了存放int 2对象的内存地址（事实上python的虚拟机会在程序运行前提前创建好0到256的int对象，于是你会发现代码中id(a)和id(b)是一样的，因为他们都指向同一对象）；函数也是对象，是对象就可以被引用，所以第四行表示给fun函数取了一个新名字a，a从指向2变成了指向fun（注意一下fun和fun()的区别，前者的返回值是fun所指的函数对象，后者的返回值是函数里return的东西）。</p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>有了前置知识就很容易学习、理解闭包了。闭包说白了，就是定义一个外层函数，这个外层函数的功能是定义一个内层函数，并返回这个内层函数对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span>(<span class="params">a</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>(<span class="params">b</span>):</span></span><br><span class="line">        <span class="keyword">return</span> a + b</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line">f = outer(<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(f(<span class="number">2</span>))  <span class="comment">#  输出3</span></span><br></pre></td></tr></table></figure>
+<p>1到4这个结构就称为闭包，第六行的功能就是得到了一个叫f的、可以给传入的一个数字加1并返回的函数。上面代码的执行顺序是1、5（第五行为空）、2(识别到第六行有函数调用，所以先跳转执行函数outer，生成一个inner函数对象，并把inner函数体中的代码载入内存)、4、6、3（通过f找到内存中之前生成的inner函数，执行函数语句）、7。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f = outer(<span class="number">1</span>)</span><br><span class="line">g = outer(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>这里调用了两次outer，实际上定义了两次inner，产生了两个不同的函数对象（内存地址不同，功能也不同，f()是传入的数字返回加1的结果，g()是返回加2的结果）。这也是为什么outer的返回值必须赋给（被引用给）一个变量，因为outer()是可以多次利用的，每次调用都会产生一个新的inner函数对象，那么你就需要不同的名字来区别这些函数，方便下次找到他们，比如上面的f和g（<em>outer函数体外面是不属于inner这个名字的作用域的，所以在outer外通过inner()调用函数是非法的，在python解释器看来，这个位置没有定义过一个叫inner的函数或者变量，所以每次产生的inner对象虽然载入了内存，但是出了outer函数体之后就失去了名字，所以必须被一个外部的变量名引用，下次需要调用它的时候才能明确你到底需要调用内存中哪一个函数</em>）。</br><br>我们再来看看新生成的inner对象载入内存这个过程的一些细节，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span>(<span class="params">a</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>(<span class="params">b</span>):</span></span><br><span class="line">        <span class="keyword">return</span> a + b</span><br><span class="line">    a = <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">f = outer(<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(f(<span class="number">2</span>))  <span class="comment"># 输出4</span></span><br></pre></td></tr></table></figure>
+<p>这段代码和之前的区别就是<code>def</code>之后加了一句<code>a = 2</code>,结果输出就等于4了。如果你看懂了我之前说得调用和定义、执行和加载的区别，你就会理解定义inner对象的时候只是把<code>return a + b</code>这段字符串载入了内存，并没有进行编译，所以当之后通过<code>f(2)</code>调用，编译并执行return语句的时候就需要去看一下现在的a等于几。但是，我想说的是，通常来说，一个函数内部定义的变量，或者其形参的生命周期在函数结束的时候就结束了，也就是说outer结束的时候，解释器理应已经不认识那个叫a的变量了（和inner的道理一样），或者说内存中已经不存在叫<code>a</code>的变量了，那么当我们在outer外部调用<code>f(2)</code>的时候，解释器在编译return语句的时候去哪里找的a呢？这就是闭包之所以为闭包的特殊之处（如果你去看官方文档的闭包定义，你会觉得不知道它在讲什么，实际上它在说我下面要讲的这个特性），解释器在执行<code>def inner(b):</code>的时候会在内存中开一块内存用于存放新生成的inner函数对象和这个对象的一些成员信息，除了将函数体语句（这里指<code>return a + b</code>）载入这块内存,还会载入变量a（a在是inner中被调用的，但是不是在inner中定义的局部变量），相当于捆绑了一份a给新生成的inner对象，所以当outer结束的时候，a并没有被销毁，而是存活在inner对象的内存中（注意，我这里所说的a是否存活，不是指a所指的那个int对象，不是说int对象存到了inner对象的内存中，这里的a是一个引用，你应该把a理解为一份地址信息，而这个地址就是a所指的int对象的地址，P.S 如果你想学好python，就必须习惯所有的变量名、函数名都只是引用）。<br>现在可以尝试在自己机器上运行下面的代码并理解其输出，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span>():</span></span><br><span class="line">    fs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):  <span class="comment"># i是整数类型 存在预留缓存池中</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner</span>():</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;i&quot;</span>, <span class="built_in">id</span>(i))</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;func&quot;</span>, <span class="built_in">id</span>(inner))  <span class="comment"># 这里的inner的引用每次定义都会重新覆盖</span></span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">        fs.append(inner)</span><br><span class="line">        inner()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;*&quot;</span> * <span class="number">30</span>)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        <span class="comment"># print(id(fs[j]), fs[j]())</span></span><br><span class="line">        <span class="built_in">print</span>(fs[j](), <span class="built_in">id</span>(fs[j]))  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;*&quot;</span> * <span class="number">30</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">id</span>(fs[i]), fs[i]())</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;*&quot;</span> * <span class="number">30</span>)</span><br><span class="line">    <span class="keyword">return</span> fs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">f1, f2, f3, f4 = outer()</span><br><span class="line"><span class="built_in">print</span>(f1(), f2(), f3(), f4())</span><br></pre></td></tr></table></figure>
+
+<h1 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h1><p>先理解<code>@</code>的作用，然后再理解通常意义上的装饰器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">funC</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;C&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">funA</span>(<span class="params">arg</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;A&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> funC</span><br><span class="line"></span><br><span class="line"><span class="meta">@funA</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">funB</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;B&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(funB)</span><br></pre></td></tr></table></figure>
+<p>funA可以称为一个装饰器（通常意义上是装饰器应该写成一个闭包），它的特征是包含一个参数（这个参数会指向被修饰的函数对象，这里arg指向funB），返回一个函数对象（闭包形式中通常返回的是inner函数对象，这里返回了funC）；<code>@funA</code>的作用就是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">funB = funA(funB)  <span class="comment"># 以后调用funB(),就不是调用的你自己定义的funB函数了，它已经指向了装饰器返回的那个函数对象，也就是funC</span></span><br></pre></td></tr></table></figure>
+<p>不是说能直接这样替换，我只是想意会一下@的作用，同时我希望你能注意到<code>@funA</code>不是定义或者加载，这里是真的跳转过去执行了一次funA，所以如果你在输出中看到了A，那么这个A是解释器在处理<code>@funA</code>时产生的，而不是在后面处理<code>print(funB)</code>时产生的。如果你对这些过程还有疑问，可以在各个位置添加<code>print(id(函数名))</code>来观察整个流程中的函数名指向的变化。</br><br>下面通过一个比较简单的例子来解释我们为什么需要装饰器，并引出通常意义上的装饰器。假设你的同事定义了一系列函数，比如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">g</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>你的老板说，“我希望每次调用一个函数都给我打印一下我调用的这个函数的名字，这样我们的程序变大变复杂了之后，我可以通过看输出知道我们的程序运行过程中调用了哪些函数，调用的次数和顺序，而不用去翻代码”，然后他把这个任务交给了你。最笨的方法当然是在每个函数的定义里加一句<code>print(函数名.__name__)</code>，（这里的__name__是函数对象的一个成员变量，其内容是函数名的字符串，这里的函数名是指def的时候用的那个名字，你可以在之前闭包代码的inner里加上这一句看看会打印出什么）,问题是你同事定义的那些函数又多又臭又长，你根本不想看，你也不能叫你同事去加，一方面现在只是加一行print代码比较简单，如果老板以后要求更复杂的功能呢，另一方面如果找同事去做就能解决问题，老板要你干嘛（<strong>另外有一个原则性问题，我们不应该轻易去修改已经写好的代码块，因为即使那些代码是你自己写的，一段时间之后，你也可能忘掉其中的一些逻辑细节，轻易修改会导致bug</strong>）。所以，这个时候最好的办法就是写一个装饰器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span>(<span class="params">fun</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>(<span class="params">b</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(fun.__name__)</span><br><span class="line">        <span class="keyword">return</span> fun(b)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br></pre></td></tr></table></figure>
+<p>然后你只需要跟你的同事说，在他写的每一句def前面加一句<code>@outer</code>。例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@outer</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@outer</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">g</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<p>这样调用f的时候，实际上是调用了f新指向的那个inner，而执行的时候fun就是被修饰前的那个f，就是同事def的那个函数，解释器会执行<code>print(fun.__name__)</code>（实现了老板要求你加的功能），然后执行<code>return fun(b)</code>（保留了你同事原来写的函数的功能），括号里的内容显示了这个叫装饰器的东西的优点。</br><br>讲到这里，你已经基本理解了装饰器的概念、原理及优点。如果你上网查装饰器，你还会发现其他许多借助装饰器实现的骚操作，我这里只介绍了最简单的版本，但是你理解了我讲的这些之后，再去看那些更秀的操作，就不会一头雾水了。这里我在多讲一个内容，就是装饰器有其他参数的情况。</br><br>你的公司100多个员工，每个人都写了一批函数，老板说，“我还希望调用一个函数的时候可以打印出这个函数是谁写的，这样出bug的时候，我可以知道该扣哪个人的工资”，你已经会写装饰器了，于是你轻松完成了这个任务，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span>(<span class="params">name</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mid</span>(<span class="params">fun</span>):</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner</span>(<span class="params">b</span>):</span></span><br><span class="line">            <span class="built_in">print</span>(name)</span><br><span class="line">            <span class="built_in">print</span>(fun.__name__)</span><br><span class="line">            <span class="keyword">return</span> fun(b)</span><br><span class="line">        <span class="keyword">return</span> inner</span><br><span class="line">    <span class="keyword">return</span> mid</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@outer(<span class="params"><span class="string">&#x27;szw&#x27;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>然后你和所有人说，在你们的函数前都加上<code>@outer(&#39;你的名字&#39;)</code>吧。现在我们用前面所学的所有知识来理解一下这个装饰器，以检测你是不是真的理解了前面的东西。乍一看这个装饰器写了三层函数，我刚看到的时候也是一脸懵逼，但是这实际上这并不是什么新规则，用我们前面讲的逻辑就能理解它了。正常的装饰标志是<code>@outer</code>这样的对吧，@后面应该写一个函数对象，而不是调用一个函数（参看前面说的关于fun和fun()的区别），那么<code>@outer(&#39;szw&#39;)</code>这里@后面为什么写了一个调用呢？对的，这里的确是调用了，所以你看看调用的返回值是什么，是一个函数对象mid，那这样就可以理解了——调用执行了<code>outer(&#39;szw&#39;)</code>后返回了一个和<code>name=&#39;szw&#39;</code>这个局部变量捆绑了的函数对象mid（参看前面讲的闭包的特性），然后执行<code>@mid</code>,再然后就和我们之前说的普通的装饰器的流程一样了。</br><br>这个故事告诉我们，语言的特性（语法规则）能为程序员提供多大的便利是一回事，程序员能在规则之上写出怎样的骚操作就是另一个故事了，这取决于一个程序员灵活利用规则的造诣。而<strong>造诣=天分+努力</strong>，如果你不够聪明，就需要多看别人的代码，模仿并理解别人的骚操作。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：浅谈Python闭包与装饰器</li>
+        <li>Post author：shaw</li>
+        <li>Create time：2018-05-24 20:43:04</li>
+        <li>
+            Post link：https://www.zenwill.top/2018/05/24/浅谈Python闭包与装饰器/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2018/07/16/Rust-VSCode%E4%BB%8Ebuild%E5%88%B0debug%E5%8E%9F%E5%88%9B%E9%85%8D%E7%BD%AE/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Rust+VSCode从build到debug原创配置</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2018/03/21/HTML%E5%9F%BA%E7%A1%80/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">HTML基础</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'c54d7d7ce569262e9b73',
+                    clientSecret: '36de61ce17c912f2bb1eebe44b42ca8d48f7d913',
+                    repo: 'ParadoxZW.github.io',
+                    owner: 'ParadoxZW',
+                    admin: ['ParadoxZW'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">shaw</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E3%80%81%E8%A7%A3%E9%87%8A%E4%B8%8E%E6%89%A7%E8%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">加载、解释与执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%88%87%E7%9A%86%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.</span> <span class="nav-text">一切皆对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">装饰器</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
