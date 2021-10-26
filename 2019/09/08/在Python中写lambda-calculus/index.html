@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="shaw">
+    
+    <title>
+        
+            在Python中写lambda calculus |
+        
+        Zen Time
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.zenwill.top","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.jpg"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Zen Time" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Zen Time
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">在Python中写lambda calculus</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">shaw</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2019-09-08 21:32:05
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/lambda-calculus/">lambda calculus</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/python/">python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>可能会有一个系列，专门记录自己研究过的奇技淫巧。 虽然有时候我们会觉得奇技淫巧是花里胡哨，华而不实的，但是当自己写出来的时候，就还是“真香”。 况且奇技淫巧之中其实蕴含着优美与真理，主要看你怎么去理解它们了。 这次的问题来源于我在网上看到的一个用lambda表达式写递归的Python语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">factorial = (<span class="keyword">lambda</span> a:<span class="keyword">lambda</span> v:a(a)(v))(<span class="keyword">lambda</span> s: <span class="keyword">lambda</span> x:<span class="number">1</span> <span class="keyword">if</span> x==<span class="number">0</span> <span class="keyword">else</span> x*s(s)(x-<span class="number">1</span>))  <span class="comment"># 实现了递归</span></span><br><span class="line"><span class="built_in">print</span>(factorial(<span class="number">5</span>)) <span class="comment"># 120</span></span><br></pre></td></tr></table></figure>
+<p>上面这个求阶乘的表达式我看了快半个小时才觉得自己大概是看懂了。好奇心驱使我开始往下挖坑，想看怎样能更好地理解这种写法。 因为学过Haskell，所以我知道这里可能涉及到了<code>lambda calculus</code>和 <code>Y combinator</code>的内容。 之前看过一点这个topic，但是也没有太深入研究。</p>
+<h1 id="先扯扯lambda-calculus"><a href="#先扯扯lambda-calculus" class="headerlink" title="先扯扯lambda calculus"></a>先扯扯lambda calculus</h1><p>lambda calculus可以理解为一个数学系统，其中最基本的元素或者说研究对象是<strong>函数</strong>, 通过函数来构造出我们做计算所需要的所有“材料”（比如自然数，四则运算符等）。 其实这有点像集合论，通过集合论可以构造出现代数学的几乎所有内容，比如皮亚诺公理就是用集合（集合套空集，集合套集合的骚操作）构造自然数。 说回lambda calculus，lambda calculus中的<strong>函数</strong>具有一些特征，这些函数是单参数的，它们能且只能接受一个函数作为参数； 当我们把一个函数作用于另一个函数（后者作为前者的参数），得到的返回值也是一个单参数函数。 这样整个系统其实就封闭了，我们可以在里面搭积木而不再需要其他任何东西了。 然后看看notation:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">λ x. E   <span class="comment"># 这表示一个函数，函数参数为x，E为函数所作运算的具体表达式</span></span><br><span class="line">M N      <span class="comment"># 将函数M作用于函数N，函数作用是可以省略括号的</span></span><br></pre></td></tr></table></figure>
+<p>第一个式子中的<code>E</code>可以包含<code>x</code>，也可以不包含，<code>E</code>就相当于一个<code>f(x)</code>， 如果<code>f(x)</code>的表达式中不包含<code>x</code>，就意味着函数的输出和输入无关。 lambda calculus中所有合法的表达式的值都是单参数函数。 另外函数是左结合的，即<code>X Y Z = (X Y) Z =(X(Y))(Z)</code>，所以<code>X (Y Z)</code>这个式子里的括号是不能去的。 函数式编程中的lambda表达式就是借鉴了<code>λ x. E</code>这样的写法，例如我们可以在Python中这样定义函数（Python借鉴了函数式编程）:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f = <span class="keyword">lambda</span> x: x + x  <span class="comment"># f(2) 的值是4</span></span><br><span class="line">g = <span class="keyword">lambda</span> x, y: x * y  <span class="comment"># f(2, 3) 的值是6</span></span><br></pre></td></tr></table></figure>
+<p>但是<code>λ x. E</code>和编程语言中的lambda表达式其实是有区别的，首先语法上lambda表达式并没有限制参数的个数（对于有柯里化特性的语言写两个参数在语义上还是可以理解成单参数函数的，例如Haskell），然后就是参数的类型不一定是函数，所创建的函数的返回值类型也不一定是函数。<strong>注意，lambda表达式的返回值是函数，但是这个函数的返回值，即它的输出是要看它接收参数后的运算结果，在lambda calculus中这种运算结果的值仍然是函数</strong>。 然后看一些基本的恒等式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ x. F x = F</span><br><span class="line">(λ x. E) T = E[x:=T]</span><br><span class="line">λ x. E[x] = λ y. E[y]</span><br></pre></td></tr></table></figure>
+<p>第二个式子的右侧是值把表达式<code>E</code>中的所有<code>x</code>都替换成<code>T</code>，第三个式子是说把参数名字换掉不改变它所代表的函数。 这三个式子的成立都很显然，应用它们做一些数学证明的时候可能从左推到右，也可能从右推到左。<br>然后我们看看，lambda calculus中是如何定义自然数的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0 = λ f. λ x. x</span><br><span class="line">1 = λ f. λ x. f x</span><br><span class="line">2 = λ f. λ x. f (f x)</span><br><span class="line">3 = λ f. λ x. f (f (f x))</span><br></pre></td></tr></table></figure>
+<p>我们称这样定义的自然数为Church数（不是教堂，是lambda calculus的发明者的名字）。 对这种定义的一种粗略的理解是，自然数<code>n</code>是这样一个函数，它接收任意一个函数<code>f</code>，返回了一个函数<code>A</code>，这个函数<code>A</code>在接收任意一个函数<code>x</code>,返回一个函数<code>B</code>，这个<code>B</code>的值等价于<code>f</code>作用于<code>x</code>，连续作用<code>n</code>次的结果。 但是，为什么要这样定义呢？后面我们还要定义各种运算，定义完的结果就是<code>1+1=2</code>这样的等式的成立是可以在lambda calculus框架下进行证明的。所以为什么这样定义，因为自洽。 虽然可以证明某某等式的成立，但是lambda calculus中的表达式往往又“臭”又长，用人脑去解析它们真的十分费力，所以我就想能不能用Python对表达式进行计算，然后<code>print</code>出一个函数所代表的Church数的值。</p>
+<h1 id="Python模拟lambda-calculus"><a href="#Python模拟lambda-calculus" class="headerlink" title="Python模拟lambda calculus"></a>Python模拟lambda calculus</h1><p>我希望的模拟不是字符串的规约推导，而是用Python的lambda表达式去比较真实的模拟，同时尽可能的保持lambda calculus的特性，也就是所有表达式或名字的值都是函数类型。 所以我写了下面一段十分神奇的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># interpreting and visualize</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">x_</span>():</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f_</span>(<span class="params">x=<span class="literal">None</span></span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">lambda</span> : <span class="number">1</span> + x()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">interpret</span>(<span class="params">f</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;查看一个函数的自然数值，具体见下文&#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">print</span>(f(f_)(x_)())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predicate</span>(<span class="params">f</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;查看一个函数的bool值，具体见下文&#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> f(f_)(x_)() == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="literal">False</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>这段代码几乎满足了我的所有要求，唯一的不足已经是语言本身的不足了（Python不支持惰性求值）。 具体的使用看后面的例子，后面例子里的所有代码（除了调用interpret或predicate）都是在对函数进行运算了，输入、输出和各种变量什么的全都是单变量函数。</p>
+<h2 id="自然数"><a href="#自然数" class="headerlink" title="自然数"></a>自然数</h2><p>我们现在开始做一些定义和测试。 根据上面提到的Church数的定义，我们可以这样写</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Church_0 = <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: x</span><br><span class="line">Church_1 = <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: f(x)</span><br><span class="line">Church_2 = <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: f(f(x))</span><br><span class="line">Church_3 = <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: f(f(f(x)))</span><br></pre></td></tr></table></figure>
+<p>代码定义完全照抄上面的数学定义。 然后我们<code>print</code>它们的值看看</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">interpret(Church_0)  <span class="comment"># 0</span></span><br><span class="line">interpret(Church_2)  <span class="comment"># 2</span></span><br><span class="line">interpret(Church_3)  <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+<p>后面的注释就是打印的结果，十分完美。</p>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p>然后我们再利用这套代码定义一些运算符看看。 下面是我们在这篇文章中将要使用的运算符的数学定义</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SUCC = λ n. λ f. λ x. f (n f x)  <span class="comment"># 加1运算</span></span><br><span class="line">PLUS = λ m. λ n. λ f. λ x. m f (n f x)  <span class="comment"># 求和运算</span></span><br><span class="line">MULT = λ m. λ n. m (PLUS n) 0  <span class="comment"># 求积运算</span></span><br><span class="line">PRED = λ n. λ f. λ x. n (λ g. λ h. h (g f)) (λ u. x) (λ u. u) <span class="comment"># 减一运算</span></span><br></pre></td></tr></table></figure>
+<p>这里先讲一下二元运算符<code>PLUS</code>和<code>MULT</code>，<code>PLUS x y</code> 这个式子表示 <code>x + y</code>，如果<code>x</code>是Church数<code>1</code>，<code>y</code>是Church数<code>2</code>，<code>PLUS x y</code>的返回值就是Church数<code>3</code>。 但是<code>PLUS</code>仍然是一个单参数函数，它接收函数<code>x</code>然后返回 <code>PLUS x</code>，<code>PLUS x</code>是一个函数，这个函数接收一个函数<code>y</code>然后返回<code>x + y</code>，即<code>PLUS x y = (PLUS x) y</code>，这就是所谓的柯里化。 <code>MULT</code>运算同理。 下面我们上代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SUCC = <span class="keyword">lambda</span> n: <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: f(n(f)(x))</span><br><span class="line">interpret(SUCC(Church_3)) <span class="comment"># 4</span></span><br><span class="line"></span><br><span class="line">PLUS = <span class="keyword">lambda</span> m: <span class="keyword">lambda</span> n: <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: m(f)(n(f)(x))</span><br><span class="line">interpret(PLUS(Church_3)(Church_2)) <span class="comment"># 5</span></span><br><span class="line"></span><br><span class="line">MULT = <span class="keyword">lambda</span> m: <span class="keyword">lambda</span> n: m(PLUS(n))(Church_0)</span><br><span class="line">interpret(MULT(Church_2)(Church_3)) <span class="comment"># 6</span></span><br><span class="line"></span><br><span class="line">PRED = <span class="keyword">lambda</span> n: <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: n(<span class="keyword">lambda</span> g: <span class="keyword">lambda</span> h: h(g(f)))(<span class="keyword">lambda</span> u: x)(<span class="keyword">lambda</span> u: u)</span><br><span class="line">interpret(PRED(Church_3)) <span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+<p>虽然这些定义看起来很吓人，但是结果都十分正确。 我们试一个更复杂的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interpret(PRED(MULT(Church_2)(Church_3))) <span class="comment"># 5</span></span><br></pre></td></tr></table></figure>
+<p>也是正确的。 当我照抄数学定义然后成功<code>print</code>出正确的结果的时候，感到惊喜且惊奇。 我们只是搭好了一个简单的地基，然后就看着这些建立在地基之上的复杂事物表现出我们所期待的行为。 这就是数学的魅力吧。</p>
+<h2 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h2><p>上文说lambda calculus可以定义出我们用来做计算需要的所有东西，这里的计算就包括逻辑计算。和C语言类似，我们定义表示0的函数为<code>False</code>，而其他的函数为<code>True</code>。 看一下具体的数学定义</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TRUE = λ u. λ v. u</span><br><span class="line">FALSE = λ u. λ v. v</span><br></pre></td></tr></table></figure>
+<p>Python的代码定义如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Church_True = <span class="keyword">lambda</span> u: <span class="keyword">lambda</span> v: u</span><br><span class="line">Church_False = <span class="keyword">lambda</span> u: <span class="keyword">lambda</span> v: v</span><br></pre></td></tr></table></figure>
+<p>根据我们之前提过的恒等式中的第三条，我们知道<code>False</code>和<code>0</code>在lambda calculus中是同一个函数。所以除了<code>interpret</code>，我写了另一个函数<code>predicate</code>，它把函数看作是一个逻辑断言，并打印出其真值。我们来测试一下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">predicate(Church_False)  <span class="comment"># False</span></span><br><span class="line">predicate(Church_True)   <span class="comment"># True</span></span><br><span class="line">predicate(Church_0)      <span class="comment"># False</span></span><br><span class="line">predicate(Church_2)      <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+<p>与我们预期的一样，除了<code>0</code>, 我们之前定义的Church数都被认为是逻辑<code>True</code>。 这样我们就在lambda calculus的背景下构造了一个布尔代数系统，我们可以定义各种逻辑运算符和布尔函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AND = λ p.λ q.p q p</span></span><br><span class="line">AND = <span class="keyword">lambda</span> p: <span class="keyword">lambda</span> q: p(q)(p)</span><br><span class="line"><span class="comment"># OR = λ p.λ q.p p q</span></span><br><span class="line">OR = <span class="keyword">lambda</span> p: <span class="keyword">lambda</span> q: p(p)(q)</span><br><span class="line"><span class="comment"># NOT = λ p.p FALSE TRUE</span></span><br><span class="line">NOT = <span class="keyword">lambda</span> p: p(Church_False)(Church_True)</span><br><span class="line">predicate(NOT(OR(Church_False)(Church_True)))  <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+<p>基于<code>0</code>和<code>False</code>的一致性，我们可以定义一个判断输入是否为<code>0</code>的函数，当且仅当输入为<code>0</code>时返回<code>True</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数学定义： ISZERO = λ n. n (λ x. FALSE) TRUE</span></span><br><span class="line">ISZERO = <span class="keyword">lambda</span> n: n(<span class="keyword">lambda</span> x: Church_False)(Church_True)</span><br><span class="line">predicate(ISZERO(Church_0))  <span class="comment"># True</span></span><br><span class="line">predicate(ISZERO(Church_3))  <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>现在到了最激动人心的part。 我们以阶乘函数为例来进行探讨，首先来看看在Haskell中我们如何用递归的方式定义阶乘函数（用Haskell举例是因为Haskell写出来的阶乘函数特别接近我们用自然语言进行的递归算法的描述，同时又可以比较形式化）</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">factorial</span> <span class="number">0</span> = <span class="number">1</span></span><br><span class="line"><span class="title">factorial</span> n = n * factorial (n<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+<p>从中我们看到了递归函数的一个重要特征，就是函数名会出现在函数定义里头。 所以乍看之下我们会觉得lambda表达式无法表达递归函数，如果硬着头皮，我们会写出像下面这样的式子</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">F = λ x. F (PRED x)</span><br></pre></td></tr></table></figure>
+<p>这个式子存在两个问题，一是在数学中我们一般不允许循环定义，你还没有定义完成F是啥，就还不能使用F，另一方面，即使语法上允许我们这么表达一个函数，这个函数也有可能是个没有尽头的死循环（<strong>注意没有输出就不是函数了</strong>）。 不过Python中的lambda表达式允许我们进行“循环定义”，因为与数学不同，Python中的函数是先定义再调用的，只有在调用的时候（也就是你在函数名后面加<code>()</code>的时候，如<code>fun()</code>）才会真正去执行一个函数的代码，而定义的时候只是将一个函数名和一串代码绑定起来，并不会去分析这段代码究竟干了什么。所以我们可以像下面这样定义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FACT_ = <span class="keyword">lambda</span> n: n(<span class="keyword">lambda</span> u: MULT(n)(FACT_(PRED(n))))(Church_1)</span><br><span class="line">interpret(FACT_(Church_0))  <span class="comment"># 1</span></span><br><span class="line">interpret(FACT_(Church_3))  <span class="comment"># 6</span></span><br></pre></td></tr></table></figure>
+<p>这个<code>FACT_</code>功能良好。 有两点十分有趣，我们看到<code>0</code>的阶乘十分自然的等于<code>1</code>，说明数学家们当初规定<code>0! = 1</code>不是随便规定的，是有一定的道理的。 另一点就是<code>FACT_</code>并没有陷入死循环，这一点看似很奇怪，因为我们似乎并没有像传统递归写法那样设置临界条件，那这个循环函数调用是如何停下来的呢？ 这里就涉及到Church<code>0</code>的定义的奥妙之处了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 = λ f. λ x. x</span><br></pre></td></tr></table></figure>
+<p>实际上函数运算到最后会出现<code>0(MULT n (PRED n))(1)</code>这样的情况，这个时候按<code>0</code>的定义，他会直接忽略传进去的<code>(MULT n (PRED n))</code>而直接返回函数<code>1</code>。 <code>(MULT n (PRED n))</code>只出现在参数里但不再出现在函数表达式里，所以也就不会再去往下计算它了。<br>说到这里，阶乘函数的实现还是依赖于Python的语言特性，而不是纯数学的lambda calculus的定义，而且看起来lambda calculus没法使用还没定义好的名字，所以似乎也写不出递归函数。 但是别慌，数学家们还是研究出来了，lambda calculus中有个叫<code>Y combinator</code>（Y组合子）的东西为lambda calculus提供了递归的实现手段</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Y = λ f. (λ x. f (x x)) (λ x. f (x x))</span><br></pre></td></tr></table></figure>
+<p>其实并不神秘，稍作思考我们就可以得到下面这个结论</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Y F = F(F(F(F(. . .)))) <span class="comment"># 无限循环调用</span></span><br></pre></td></tr></table></figure>
+<p>然后我尝试在Python中实现<code>Y combinator</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Y = <span class="keyword">lambda</span> f: (<span class="keyword">lambda</span> x: f(x(x)))(<span class="keyword">lambda</span> x: f(x(x)))</span><br><span class="line">F = <span class="keyword">lambda</span> g: <span class="keyword">lambda</span> n: n(<span class="keyword">lambda</span> u: MULT(n)(g(PRED(n))))(Church_1)</span><br><span class="line">FACT = Y(F)</span><br><span class="line">interpret(FACT(Church_3))</span><br></pre></td></tr></table></figure>
+<p>然后不幸发生了，到第三行Python报错了，说是递归爆栈了，也就是陷入了死循环。这是因为Python不是惰性求值的，当我执行<code>FACT = Y(F)</code>的时候，解释器就会去执行<code>Y</code>函数的计算，按照定义自然会出现无限调用的情况。 lambda calculus所希望的是，你先别去计算<code>Y(F)</code>的返回值究竟是个什么函数，等这个函数作用了<code>Church_3</code>再去实施计算，到时候<code>Church_0</code>就会负责把死循环截断。所以很多函数式编程语言都会设计成惰性求值来增强语言的表达能力，避免不必要的死循环。<br>那么路走到这里，就走到尽头了吗？并没有，回顾我们开篇提到的阶乘函数的实现，它也是用lambda表达式写的，也没有使用未定义的名字，于是我仿照它不使用<code>Y combinator</code>，重新定义了阶乘函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">T = λ f. λ x. f f x</span><br><span class="line">G = λ g. λ n. n (λ u. MULT n (g g (PRED n))) 1</span><br><span class="line">FACT = T G</span><br></pre></td></tr></table></figure>
+<p>然后使用Python实现并测试</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">T = <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: f(f)(x)</span><br><span class="line">G = <span class="keyword">lambda</span> g: <span class="keyword">lambda</span> n: n(<span class="keyword">lambda</span> u: MULT(n)(g(g)(PRED(n))))(Church_1)</span><br><span class="line">FACT = T(G)</span><br><span class="line">interpret(FACT(PLUS(Church_3)(Church_2)))  <span class="comment"># 120</span></span><br></pre></td></tr></table></figure>
+<p>成功了。 一个合理的解释是，在数学上两个<code>FACT</code>是同一个函数，只是我们通过数学上的变换调整了函数的组织方式，从而改变了其中的运算顺序，避免了因为不支持惰性求值而造成的问题。 这个猜想的正确性需要需要通过数学证明来保证，也就是证明<code>Y F = T G</code>。</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a><em>证明</em></h3><p>我们观察到<code>G</code>和<code>F</code>的主要区别就在于<code>g (PRED n)</code>和<code>g g (PRED n)</code>，所以我们的入手点也是这里，先尝试把两个<code>g</code>变成一个函数来表示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">G = λ g. (λ h. λ n. n (λ u. MULT n (h (PRED n))) 1)(g g)</span><br><span class="line">  = λ g. F (g g)</span><br></pre></td></tr></table></figure>
+<p>所以有</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">T G = (λ f. λ x. f f x)(λ g. F (g g))</span><br><span class="line">    = λ x. (λ g. F (g g)) (λ g. F (g g)) x</span><br><span class="line">    = (λ g. F (g g)) (λ g. F (g g))</span><br><span class="line">    = (λ f. (λ g. f (g g)) (λ g. f (g g))) F</span><br><span class="line">    = Y F</span><br></pre></td></tr></table></figure>
+<p>证明成功。</p>
+<h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><p>这次的探究启发了我们写递归函数的方式，并不是只有自己定义（中出现）自己才能实现递归。当然我不会在Python中这样写递归函数，因为可读性太差，对于不了解函数式编程的人，这样的代码非常不友好。即使在Haskell中，我也不会这样写，因为Haskell中有更优美的递归写法。但是lambda calculus中对函数的变换、组合和使用的精髓是值得我们学习的，这有助于我在写函数式的Python语句或写Haskell时更清楚我能写什么，我能怎么写。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a><em>参考</em></h1><ol>
+<li><a href="en.wikipedia.org/wiki/Lambda_calculus">Lambda_calculus</a></li>
+<li><a href="blog.kaaass.net/archives/950">各语言Y组合子大比拼</a></li>
+</ol>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：在Python中写lambda calculus</li>
+        <li>Post author：shaw</li>
+        <li>Create time：2019-09-08 21:32:05</li>
+        <li>
+            Post link：https://www.zenwill.top/2019/09/08/在Python中写lambda-calculus/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2020/03/09/VIM%E6%9D%82%E8%AE%B0-%E4%B8%80/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">VIM杂记(一)</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2019/03/30/windows%E4%B8%8A%E5%88%A9%E7%94%A8docker%E5%AE%89%E8%A3%85Mysql/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">windows上利用docker安装MySQL</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'c54d7d7ce569262e9b73',
+                    clientSecret: '36de61ce17c912f2bb1eebe44b42ca8d48f7d913',
+                    repo: 'ParadoxZW.github.io',
+                    owner: 'ParadoxZW',
+                    admin: ['ParadoxZW'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">shaw</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%88%E6%89%AF%E6%89%AFlambda-calculus"><span class="nav-number">2.</span> <span class="nav-text">先扯扯lambda calculus</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python%E6%A8%A1%E6%8B%9Flambda-calculus"><span class="nav-number">3.</span> <span class="nav-text">Python模拟lambda calculus</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E7%84%B6%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">自然数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">3.2.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="nav-number">3.3.</span> <span class="nav-text">逻辑运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92"><span class="nav-number">3.4.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E"><span class="nav-number">3.4.1.</span> <span class="nav-text">证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E5%B0%BE"><span class="nav-number">4.</span> <span class="nav-text">结尾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

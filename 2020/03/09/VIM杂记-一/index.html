@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="shaw">
+    
+    <title>
+        
+            VIM杂记(一) |
+        
+        Zen Time
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.png">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.zenwill.top","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.png","favicon":"/images/logo.png","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.jpg"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.2"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Zen Time" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            <a class="logo-title" href="/">
+                Zen Time
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/links"
+                            >
+                                LINKS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/links">LINKS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">VIM杂记(一)</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.png">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">shaw</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2020-03-09 17:23:18
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/VIM/">VIM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>每次都觉得我的vim走上正轨了</p>
+<p>three months later…</p>
+<p>卧槽 这什么bug？这个插件怎么用来着？那个命令怎么写来着？</p>
+<p>three days later…</p>
+<p>“我又好了！”</p>
+<p>为了再次避免这种情况，打算把每次学到东西记录下来。查博客总比查百度高效一些。由于只是记录当前学到的东西，<br>又因为认识的片面性，<br>所以可能会有错误，反正后面发现是错误了，再在后续的杂记里更正就是了。</p>
+<h1 id="1-1"><a href="#1-1" class="headerlink" title="1.1"></a>1.1</h1><h2 id="关于Vundle"><a href="#关于Vundle" class="headerlink" title="关于Vundle"></a>关于Vundle</h2><p>使用<code>Vundle</code>插件进行Vim插件的统一管理，包括安装、卸载等功能。 一般单独开一个文件<code>.vimrc.bundles</code>列出所要加载的插件，在<code>.vimrc</code>里需要载入该文件。 在<code>.vimrc.bundles</code>中列出所需插件之前，需要先将<code>Vundle</code>的代码包加入vim的运行时路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set rtp+&#x3D;~&#x2F;.vim&#x2F;bundle&#x2F;Vundle.vim&#x2F;</span><br></pre></td></tr></table></figure>
+<p>其中<code>rtp</code>应该是runtime path的意思，vim有自己的运行时来解析执行vimscript脚本，想要调用预先定义在文件中的函数，自然需要将这些文件地址加入运行时地址列表。我猜后面其他插件的文件路径都是由Vundle负责加入<code>rtp</code>的。</p>
+<p>在下面这样的代码块中加入所需要使用的插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">call vundle#begin()</span><br><span class="line">Plugin &#39;VundleVim&#x2F;Vundle.vim&#39;</span><br><span class="line">Plugin &#39;xxx&#x2F;xxxxx&#39;</span><br><span class="line">...</span><br><span class="line">call vundle#end()</span><br></pre></td></tr></table></figure>
+<p>注意Vundle必须是第一个列入的插件。<code>call</code>是vimscript中的函数调用，<code>#</code>类似python或java中的<code>.</code>。如果不打算使用某插件可以注释掉对应的<code>Plugin</code>那一行，而不需要卸载。</p>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>在<code>.vimrc.bundles</code>加入<code>Plugin xxx/xxxxxxx</code>，保存文件后在vim下执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:PluginInstall</span><br></pre></td></tr></table></figure>
+
+<h2 id="卸载插件"><a href="#卸载插件" class="headerlink" title="卸载插件"></a>卸载插件</h2><p>在<code>.vimrc.bundles</code>注释<code>Plugin xxx/xxxxxxx</code>，保存文件后在vim下执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:PluginClean</span><br></pre></td></tr></table></figure>
+
+<h1 id="1-2"><a href="#1-2" class="headerlink" title="1.2"></a>1.2</h1><ul>
+<li><code>ultisnips</code>是一个snippets的引擎，<code>vim-snippets</code>里面有很多常用的脚本。这两个插件需要配合使用。</li>
+<li>发现自己的<code>ultisnips</code>有bug，然后我重装了，然后出现更大的bug，查了半天是github上的最新版本的代码支持python3了，但是我的vim只支持python2, 于是手动下了github上之前版本的代码放入<code>.vim/Bundle</code>文件夹。 但是还是有bug，发现我的<code>Enter</code>键没法回车了，查了半天bug，甚至阅读了<code>ultisnips</code>的部分代码（主要是<code>./autoload/UltiSnips/map_keys.vim</code>和<code>./autoload/UltiSnips.vim</code>），经过各种调试发现是，somehow，我的vim在select模式下<code>&lt;c-m&gt;</code>和<code>&lt;cr&gt;</code>是捆绑的，我配置了用<code>&lt;c-m&gt;</code>来展开，结果就导致了<code>&lt;cr&gt;</code>也映射到了展开snippets的命令上。。。TAT。最后试了几个键发现<code>c-l</code>是好用的，也顺手。</li>
+<li>另外，我观察到在打开vim的瞬间，ultisnips会先跑两个样例，如果这两个样例有问题，就会在打开vim的时候报错，一般情况下用户是察觉不到这个过程的。</li>
+<li><code>inc</code>、<code>incc</code>、<code>mainn</code>、<code>fori</code>都是c语言中常用的snippets</li>
+<li>在我的配置中<code>&lt;c-l&gt;</code>可以进行展开或者跳到下一个placeholder，<code>&lt;c-k&gt;</code>回到上一个placeholder。</li>
+<li><code>:UltiSnipsEdit</code>可以查看对应当前编辑文件的snippet配置文件 </li>
+</ul>
+<h1 id="1-3"><a href="#1-3" class="headerlink" title="1.3"></a>1.3</h1><p>在vim插件的代码中可以通过<code>verbose map **</code>和<code>echo</code>进行调试。<code>:map</code>、<code>:snoremap</code>等可以查看对应模式下的按键映射。关于按键映射的知识点，可参考<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/u012291393/article/details/78650512" >https://blog.csdn.net/u012291393/article/details/78650512<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="1-4"><a href="#1-4" class="headerlink" title="1.4"></a>1.4</h1><p>多行缩进</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:10,20&gt;</span><br><span class="line">:12,13&lt;</span><br></pre></td></tr></table></figure>
+<p>跑Python代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:py import sys; print(sys.version)</span><br></pre></td></tr></table></figure>
+<p>多行注释: ctrl+v进入列编辑模式，在编辑模式中，在行间上下移动光标，选择需要编辑哪些行的对应的列，之后使用I（大写）进入列插入。 插入注释符，按Esc退出列编辑模式即可实现多行注释。</p>
+<p>删除注释：按v,进入visual模式,横向选中列的个数(如”/ /“注释符号,需要选中两列),再按ctrl+v 进入列编辑模式,向下或向上移动光标,选中注释部分,然后按d, 就会删除注释符号。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：VIM杂记(一)</li>
+        <li>Post author：shaw</li>
+        <li>Create time：2020-03-09 17:23:18</li>
+        <li>
+            Post link：https://www.zenwill.top/2020/03/09/VIM杂记-一/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/08/09/N%E7%BB%B4%E9%9A%8F%E6%9C%BA%E6%B8%B8%E8%B5%B0%E7%9A%84%E5%B8%B8%E8%BF%94%E6%80%A7%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E9%AA%8C%E9%AA%8C%E8%AF%81/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">N维随机游走的常返性模拟实验验证</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2019/09/08/%E5%9C%A8Python%E4%B8%AD%E5%86%99lambda-calculus/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">在Python中写lambda calculus</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;Comments</i>
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-pjax
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-pjax>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'c54d7d7ce569262e9b73',
+                    clientSecret: '36de61ce17c912f2bb1eebe44b42ca8d48f7d913',
+                    repo: 'ParadoxZW.github.io',
+                    owner: 'ParadoxZW',
+                    admin: ['ParadoxZW'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>&nbsp;-&nbsp;
+            
+            2021&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">shaw</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.2</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1"><span class="nav-number">2.</span> <span class="nav-text">1.1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EVundle"><span class="nav-number">2.1.</span> <span class="nav-text">关于Vundle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E6%8F%92%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">卸载插件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-2"><span class="nav-number">3.</span> <span class="nav-text">1.2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-3"><span class="nav-number">4.</span> <span class="nav-text">1.3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-4"><span class="nav-number">5.</span> <span class="nav-text">1.4</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
